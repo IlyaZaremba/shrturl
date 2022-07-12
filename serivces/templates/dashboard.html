@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section style="background-color: gainsboro; padding-top:5rem;padding-bottom:5rem; ">
+    <div class="container card shadow col-md-7">
+
+        <form class="row mt-3" method="POST">
+          {% csrf_token %}
+  <div class="col-md-7">
+
+    <input type="text"  class="form-control" id="staticUrl" name="URL" placeholder="Paste URL">
+  </div>
+  <div class="col-3">
+
+    <input type="test" class="form-control"  placeholder="Alias" name="alias">
+  </div>
+  <div class="col-2">
+    <button type="submit" class="btn btn-primary mb-3">Short URL</button>
+  </div>
+</form>
+    </div>
+    <div class="container card shadow col-md-7 mt-4">
+    <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">URL</th>
+      <th scope="col">Shorted URL</th>
+      <th scope="col">Date, Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {%for url in request.user.url_set.all %}
+      <th scope="row">1</th>
+      <td><input type="text" value="{{url.target_url}}" title="{{url.target_url}}" class="form-control" readonly></td>
+      <td class="d-flex align-items-center">
+        <span>
+          <input type="text" value="{{domain}}/{{url.alias}}" title="{{domain}}/{{url.alias}}" class="form-control" readonly>
+
+        </span>
+      </td>
+      <td>{{url.timestamp}}</td>
+    </tr>
+  {%endfor%}
+  </tbody>
+</table>
+    </div>
+</section>
+{% endblock content %}
